@@ -75,7 +75,7 @@
   /* ---------- Sticky nav ---------- */
   .navwrap{position:sticky;top:0;z-index:50;background:var(--bg);padding:12px 20px 10px;border-bottom:1px solid var(--line)}
   .nav-inner{max-width:1180px;margin:0 auto}
-  .viewnav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .viewnav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   .viewbtn{display:flex;align-items:center;gap:12px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;color:var(--ink);transition:border-color .15s, background .15s, transform .1s}
   .viewbtn:active{transform:scale(.985)}
   .viewbtn .ic{flex:none;width:38px;height:38px;border-radius:9px;background:var(--surface-2);display:grid;place-items:center;color:var(--ink-2)}
@@ -86,6 +86,7 @@
   .viewbtn[aria-selected="true"] .ic{background:var(--accent);color:#fff}
   .viewbtn[aria-selected="true"] .lbl span{color:color-mix(in srgb, var(--bg) 65%, transparent)}
   @media (max-width:640px){
+    .viewnav{grid-template-columns:repeat(2,1fr)}
     .viewbtn{flex-direction:column;align-items:flex-start;gap:8px;padding:10px 11px}
     .viewbtn .lbl b{font-size:13px}
     .viewbtn .lbl span{display:none}
@@ -149,6 +150,22 @@
   .chev{color:var(--ink-3);font-size:12px;transition:transform .15s;display:inline-block}
   tr.open .chev{transform:rotate(180deg)}
 
+  /* Watched — Letterboxd stars */
+  .stars{display:inline-flex;align-items:center;gap:1px;font-size:17px;line-height:1;vertical-align:middle}
+  .stars .star{color:var(--line);position:relative;display:inline-block;width:1em;height:1em;line-height:1}
+  .stars .star.full{color:#00a94f}
+  .stars .star.empty{color:var(--line)}
+  .stars .star.half .base{color:var(--line)}
+  .stars .star.half .fill{color:#00a94f;position:absolute;left:0;top:0;width:50%;overflow:hidden;white-space:nowrap}
+  @media (prefers-color-scheme: dark){ .stars .star.full{color:#37c978} .stars .star.half .fill{color:#37c978} }
+  .stars-num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);margin-left:8px;white-space:nowrap;vertical-align:middle}
+  .lb-badge{display:inline-flex;align-items:center;gap:6px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.04em;background:#14181c;color:#9ab;padding:4px 9px;border-radius:999px;white-space:nowrap;text-decoration:none}
+  .lb-badge i{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .lb-badge .d1{background:#00e054}.lb-badge .d2{background:#40bcf4}.lb-badge .d3{background:#ff8000}
+  .lb-note{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin:0 0 12px;font-size:13.5px;color:var(--ink-2)}
+  .lb-note strong{color:var(--ink)}
+  tbody tr.watched-row:hover{background:color-mix(in srgb, var(--accent-soft) 35%, transparent)}
+
   /* group header rows (Recently Added) */
   tr.group-row td{background:var(--ink);color:var(--bg);padding:10px 14px;border-bottom:none}
   tr.group-row .gdate{font-family:"Archivo",sans-serif;font-weight:800;font-size:14px;letter-spacing:.01em}
@@ -163,8 +180,10 @@
     tbody td{padding:0;border-bottom:none}
     td.c-rank{display:none}
     td.c-title{margin-bottom:8px}
-    td.c-rating, td.c-release, td.c-director, td.c-added{display:inline-block;width:auto;margin:0 14px 4px 0;vertical-align:middle}
-    td.c-release::before, td.c-director::before, td.c-added::before{content:attr(data-lbl);font-family:"IBM Plex Mono",monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);display:block}
+    td.c-rating, td.c-release, td.c-director, td.c-added, td.c-wyear, td.c-wrating{display:inline-block;width:auto;margin:0 14px 4px 0;vertical-align:middle}
+    tbody tr.watched-row{padding:14px 14px 12px;border-bottom:1px solid var(--line)}
+    td.c-wtitle{margin-bottom:8px}
+    td.c-release::before, td.c-director::before, td.c-added::before, td.c-wyear::before, td.c-wrating::before{content:attr(data-lbl);font-family:"IBM Plex Mono",monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);display:block}
     .detail-row td{padding:4px 14px 16px}
     tr.group-row td{padding:10px 14px}
     tr.group-row .gsrc{display:block;margin:2px 0 0}
@@ -187,6 +206,7 @@
     <div class="stat"><b><em>9.6</em></b><span>Top IMDb — Finding Frances</span></div>
     <div class="stat"><b>1998–2026</b><span>Release span</span></div>
     <div class="stat"><b>22</b><span>Rated 7.0 or higher</span></div>
+    <div class="stat"><b>194</b><span>Watched on Letterboxd</span></div>
     <div class="stat"><b>Nov 8, 2026</b><span>Last updated</span></div>
   </div>
 </header>
@@ -206,6 +226,10 @@
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
         <span class="lbl"><b>Most Recent → Oldest</b><span>BY RELEASE DATE</span></span>
       </button>
+      <button class="viewbtn" role="tab" data-view="watched" aria-selected="false" id="tab-watched">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <span class="lbl"><b>Watched</b><span>LETTERBOXD · YOUR STARS</span></span>
+      </button>
     </nav>
   </div>
 </div>
@@ -224,6 +248,8 @@
     <option value="2010">2010s</option>
     <option value="2000">2000s</option>
     <option value="1990">1990s</option>
+    <option value="1980">1980s</option>
+    <option value="1970">1970s</option>
   </select>
   <span class="count-note" id="countNote"></span>
 </div>
@@ -261,10 +287,25 @@
     </div>
     <div class="table-card"><table id="tbl-release"></table></div>
   </section>
+
+  <section class="view" id="view-watched" role="tabpanel" aria-labelledby="tab-watched">
+    <div class="view-head">
+      <div>
+        <h2>Watched — Letterboxd</h2>
+        <p>Every film you've logged as watched, with your own star rating. Sort by title, year, or your rating, and search the list — 194 films in all.</p>
+      </div>
+      <button class="reset-btn" data-reset="watched">↺ Back to your-rating order</button>
+    </div>
+    <div class="lb-note">
+      <a class="lb-badge" href="https://letterboxd.com/dyacobs" target="_blank" rel="noopener"><i class="d1"></i><i class="d2"></i><i class="d3"></i>LETTERBOXD ↗</a>
+      <span>Data from your Letterboxd profile (<strong>dyacobs</strong>), pulled <strong>November 8, 2026</strong>. Ratings are yours, out of 5 stars. TV titles in that list (Squid Game, The Queen's Gambit) aren't included here — this view is films only.</span>
+    </div>
+    <div class="table-card"><table id="tbl-watched"></table></div>
+  </section>
 </main>
 
 <footer>
-  <span>Source: “Movies to Watch” list · Movie recommendations from Instagram reels</span>
+  <span>Source: “Movies to Watch” list · Movie recommendations from Instagram reels · Watched data from Letterboxd (dyacobs), pulled November 8, 2026</span>
   <span>IMDb ratings as of November 2026</span>
 </footer>
 
@@ -539,6 +580,203 @@ var MOVIES = [
   }
 ];
 
+var WATCHED = [
+  { title: "Babylon", year: 2022, rating: 3.5 },
+  { title: "Avatar: The Way of Water", year: 2022, rating: 4.0 },
+  { title: "All Quiet on the Western Front", year: 2022, rating: 4.5 },
+  { title: "The Fabelmans", year: 2022, rating: 4.0 },
+  { title: "Glass Onion", year: 2022, rating: 3.5 },
+  { title: "The Menu", year: 2022, rating: 4.0 },
+  { title: "The Banshees of Inisherin", year: 2022, rating: 3.0 },
+  { title: "The Whale", year: 2022, rating: 4.0 },
+  { title: "T\u00c1R", year: 2022, rating: 3.5 },
+  { title: "Elvis", year: 2022, rating: 4.0 },
+  { title: "Aftersun", year: 2022, rating: 3.0 },
+  { title: "Top Gun: Maverick", year: 2022, rating: 4.0 },
+  { title: "The Northman", year: 2022, rating: 3.5 },
+  { title: "Everything Everywhere All at Once", year: 2022, rating: 4.0 },
+  { title: "The Batman", year: 2022, rating: 4.0 },
+  { title: "Scream", year: 2022, rating: 2.5 },
+  { title: "Don't Look Up", year: 2021, rating: 3.0 },
+  { title: "Licorice Pizza", year: 2021, rating: 4.0 },
+  { title: "tick, tick... BOOM!", year: 2021, rating: 3.5 },
+  { title: "No Time to Die", year: 2021, rating: 3.5 },
+  { title: "Spencer", year: 2021, rating: 3.5 },
+  { title: "Dune", year: 2021, rating: 4.0 },
+  { title: "The Power of the Dog", year: 2021, rating: 1.5 },
+  { title: "Free Guy", year: 2021, rating: 3.0 },
+  { title: "Soul", year: 2020, rating: 5.0 },
+  { title: "Nomadland", year: 2020, rating: 4.0 },
+  { title: "Tenet", year: 2020, rating: 2.0 },
+  { title: "1917", year: 2019, rating: 4.0 },
+  { title: "The Irishman", year: 2019, rating: 3.0 },
+  { title: "Knives Out", year: 2019, rating: 3.5 },
+  { title: "Sound of Metal", year: 2019, rating: 4.0 },
+  { title: "Joker", year: 2019, rating: 5.0 },
+  { title: "Ford v Ferrari", year: 2019, rating: 4.0 },
+  { title: "Uncut Gems", year: 2019, rating: 4.5 },
+  { title: "Once Upon a Time... in Hollywood", year: 2019, rating: 4.0 },
+  { title: "Parasite", year: 2019, rating: 5.0 },
+  { title: "Bohemian Rhapsody", year: 2018, rating: 4.0 },
+  { title: "Green Book", year: 2018, rating: 4.0 },
+  { title: "Beautiful Boy", year: 2018, rating: 4.0 },
+  { title: "A Star Is Born", year: 2018, rating: 4.0 },
+  { title: "The Favourite", year: 2018, rating: 3.5 },
+  { title: "Incredibles 2", year: 2018, rating: 4.0 },
+  { title: "BlacKkKlansman", year: 2018, rating: 3.5 },
+  { title: "Ready Player One", year: 2018, rating: 3.5 },
+  { title: "Annihilation", year: 2018, rating: 3.5 },
+  { title: "Phantom Thread", year: 2017, rating: 4.0 },
+  { title: "Coco", year: 2017, rating: 5.0 },
+  { title: "Blade Runner 2049", year: 2017, rating: 4.0 },
+  { title: "I, Tonya", year: 2017, rating: 4.0 },
+  { title: "Three Billboards Outside Ebbing, Missouri", year: 2017, rating: 4.0 },
+  { title: "Lady Bird", year: 2017, rating: 3.5 },
+  { title: "The Shape of Water", year: 2017, rating: 3.5 },
+  { title: "Dunkirk", year: 2017, rating: 2.5 },
+  { title: "Good Time", year: 2017, rating: 3.0 },
+  { title: "Baby Driver", year: 2017, rating: 4.0 },
+  { title: "Get Out", year: 2017, rating: 4.5 },
+  { title: "Call Me by Your Name", year: 2017, rating: 4.0 },
+  { title: "Doctor Strange", year: 2016, rating: 3.5 },
+  { title: "Split", year: 2016, rating: 3.0 },
+  { title: "Moonlight", year: 2016, rating: 4.0 },
+  { title: "Arrival", year: 2016, rating: 4.5 },
+  { title: "La La Land", year: 2016, rating: 5.0 },
+  { title: "Suicide Squad", year: 2016, rating: 1.5 },
+  { title: "The Nice Guys", year: 2016, rating: 3.0 },
+  { title: "Deadpool", year: 2016, rating: 3.5 },
+  { title: "Manchester by the Sea", year: 2016, rating: 4.0 },
+  { title: "The Revenant", year: 2015, rating: 4.5 },
+  { title: "The Hateful Eight", year: 2015, rating: 2.0 },
+  { title: "The Big Short", year: 2015, rating: 4.0 },
+  { title: "The Martian", year: 2015, rating: 3.5 },
+  { title: "Room", year: 2015, rating: 4.5 },
+  { title: "Sicario", year: 2015, rating: 4.0 },
+  { title: "Inside Out", year: 2015, rating: 4.5 },
+  { title: "The Lobster", year: 2015, rating: 3.0 },
+  { title: "Mad Max: Fury Road", year: 2015, rating: 4.0 },
+  { title: "Ex Machina", year: 2015, rating: 4.0 },
+  { title: "Kingsman: The Secret Service", year: 2014, rating: 3.0 },
+  { title: "Interstellar", year: 2014, rating: 5.0 },
+  { title: "Gone Girl", year: 2014, rating: 4.0 },
+  { title: "Nightcrawler", year: 2014, rating: 4.0 },
+  { title: "The Imitation Game", year: 2014, rating: 3.5 },
+  { title: "Birdman or (The Unexpected Virtue of Ignorance)", year: 2014, rating: 4.5 },
+  { title: "Guardians of the Galaxy", year: 2014, rating: 4.0 },
+  { title: "Captain America: The Winter Soldier", year: 2014, rating: 3.5 },
+  { title: "The Grand Budapest Hotel", year: 2014, rating: 2.0 },
+  { title: "The Lego Movie", year: 2014, rating: 4.0 },
+  { title: "Whiplash", year: 2014, rating: 5.0 },
+  { title: "The Wolf of Wall Street", year: 2013, rating: 4.5 },
+  { title: "Her", year: 2013, rating: 4.5 },
+  { title: "12 Years a Slave", year: 2013, rating: 4.5 },
+  { title: "Prisoners", year: 2013, rating: 4.0 },
+  { title: "Gravity", year: 2013, rating: 3.0 },
+  { title: "Snowpiercer", year: 2013, rating: 3.5 },
+  { title: "The Great Gatsby", year: 2013, rating: 4.0 },
+  { title: "Django Unchained", year: 2012, rating: 4.5 },
+  { title: "Silver Linings Playbook", year: 2012, rating: 5.0 },
+  { title: "The Dark Knight Rises", year: 2012, rating: 4.5 },
+  { title: "Moonrise Kingdom", year: 2012, rating: 3.0 },
+  { title: "The Hunger Games", year: 2012, rating: 3.5 },
+  { title: "Crazy, Stupid, Love.", year: 2011, rating: 3.5 },
+  { title: "Drive", year: 2011, rating: 4.5 },
+  { title: "Midnight in Paris", year: 2011, rating: 3.5 },
+  { title: "Thor", year: 2011, rating: 3.0 },
+  { title: "The Social Network", year: 2010, rating: 5.0 },
+  { title: "Black Swan", year: 2010, rating: 4.5 },
+  { title: "Inception", year: 2010, rating: 5.0 },
+  { title: "Iron Man 2", year: 2010, rating: 3.5 },
+  { title: "Shutter Island", year: 2010, rating: 4.5 },
+  { title: "Avatar", year: 2009, rating: 4.5 },
+  { title: "Fantastic Mr. Fox", year: 2009, rating: 2.5 },
+  { title: "The Hangover", year: 2009, rating: 4.0 },
+  { title: "Inglourious Basterds", year: 2009, rating: 4.0 },
+  { title: "Up", year: 2009, rating: 5.0 },
+  { title: "The Dark Knight", year: 2008, rating: 5.0 },
+  { title: "WALL\u00b7E", year: 2008, rating: 4.5 },
+  { title: "Kung Fu Panda", year: 2008, rating: 3.0 },
+  { title: "Iron Man", year: 2008, rating: 4.0 },
+  { title: "There Will Be Blood", year: 2007, rating: 4.5 },
+  { title: "Juno", year: 2007, rating: 4.0 },
+  { title: "Superbad", year: 2007, rating: 4.0 },
+  { title: "Ratatouille", year: 2007, rating: 5.0 },
+  { title: "No Country for Old Men", year: 2007, rating: 4.5 },
+  { title: "The Prestige", year: 2006, rating: 4.0 },
+  { title: "The Departed", year: 2006, rating: 5.0 },
+  { title: "Pan's Labyrinth", year: 2006, rating: 4.5 },
+  { title: "Cars", year: 2006, rating: 3.5 },
+  { title: "Little Miss Sunshine", year: 2006, rating: 4.0 },
+  { title: "Batman Begins", year: 2005, rating: 4.0 },
+  { title: "The Incredibles", year: 2004, rating: 4.0 },
+  { title: "Kill Bill: Vol. 2", year: 2004, rating: 4.0 },
+  { title: "Oldboy", year: 2003, rating: 4.5 },
+  { title: "Kill Bill: Vol. 1", year: 2003, rating: 4.0 },
+  { title: "School of Rock", year: 2003, rating: 4.0 },
+  { title: "Lost in Translation", year: 2003, rating: 3.5 },
+  { title: "Pirates of the Caribbean: The Curse of the Black Pearl", year: 2003, rating: 3.0 },
+  { title: "Finding Nemo", year: 2003, rating: 5.0 },
+  { title: "Catch Me If You Can", year: 2002, rating: 5.0 },
+  { title: "The Pianist", year: 2002, rating: 4.5 },
+  { title: "Punch-Drunk Love", year: 2002, rating: 4.0 },
+  { title: "City of God", year: 2002, rating: 5.0 },
+  { title: "Spider-Man", year: 2002, rating: 4.0 },
+  { title: "Ocean's Eleven", year: 2001, rating: 4.0 },
+  { title: "Harry Potter and the Philosopher's Stone", year: 2001, rating: 3.5 },
+  { title: "Monsters, Inc.", year: 2001, rating: 4.5 },
+  { title: "The Royal Tenenbaums", year: 2001, rating: 3.5 },
+  { title: "Legally Blonde", year: 2001, rating: 3.5 },
+  { title: "Mulholland Drive", year: 2001, rating: 4.0 },
+  { title: "Donnie Darko", year: 2001, rating: 4.0 },
+  { title: "Memento", year: 2000, rating: 4.5 },
+  { title: "Requiem for a Dream", year: 2000, rating: 4.5 },
+  { title: "Gladiator", year: 2000, rating: 5.0 },
+  { title: "American Psycho", year: 2000, rating: 4.5 },
+  { title: "Girl, Interrupted", year: 1999, rating: 4.0 },
+  { title: "The Green Mile", year: 1999, rating: 4.5 },
+  { title: "Fight Club", year: 1999, rating: 4.0 },
+  { title: "American Beauty", year: 1999, rating: 5.0 },
+  { title: "The Sixth Sense", year: 1999, rating: 4.0 },
+  { title: "Eyes Wide Shut", year: 1999, rating: 4.0 },
+  { title: "10 Things I Hate About You", year: 1999, rating: 4.0 },
+  { title: "The Matrix", year: 1999, rating: 4.5 },
+  { title: "Saving Private Ryan", year: 1998, rating: 5.0 },
+  { title: "The Truman Show", year: 1998, rating: 4.5 },
+  { title: "The Big Lebowski", year: 1998, rating: 5.0 },
+  { title: "Good Will Hunting", year: 1997, rating: 5.0 },
+  { title: "Titanic", year: 1997, rating: 4.5 },
+  { title: "Boogie Nights", year: 1997, rating: 5.0 },
+  { title: "Scream", year: 1996, rating: 3.0 },
+  { title: "Fargo", year: 1996, rating: 5.0 },
+  { title: "Trainspotting", year: 1996, rating: 4.5 },
+  { title: "Se7en", year: 1995, rating: 4.5 },
+  { title: "L\u00e9on: The Professional", year: 1994, rating: 4.0 },
+  { title: "The Shawshank Redemption", year: 1994, rating: 5.0 },
+  { title: "Forrest Gump", year: 1994, rating: 5.0 },
+  { title: "Pulp Fiction", year: 1994, rating: 5.0 },
+  { title: "Schindler's List", year: 1993, rating: 5.0 },
+  { title: "Reservoir Dogs", year: 1992, rating: 4.0 },
+  { title: "The Silence of the Lambs", year: 1991, rating: 5.0 },
+  { title: "Edward Scissorhands", year: 1990, rating: 4.0 },
+  { title: "Home Alone", year: 1990, rating: 3.5 },
+  { title: "GoodFellas", year: 1990, rating: 5.0 },
+  { title: "When Harry Met Sally...", year: 1989, rating: 4.0 },
+  { title: "Dead Poets Society", year: 1989, rating: 4.5 },
+  { title: "Die Hard", year: 1988, rating: 4.0 },
+  { title: "Full Metal Jacket", year: 1987, rating: 5.0 },
+  { title: "Ferris Bueller's Day Off", year: 1986, rating: 4.5 },
+  { title: "Top Gun", year: 1986, rating: 4.0 },
+  { title: "Back to the Future", year: 1985, rating: 4.5 },
+  { title: "Scarface", year: 1983, rating: 4.0 },
+  { title: "E.T. the Extra-Terrestrial", year: 1982, rating: 5.0 },
+  { title: "Apocalypse Now", year: 1979, rating: 4.0 },
+  { title: "Taxi Driver", year: 1976, rating: 5.0 },
+  { title: "One Flew Over the Cuckoo's Nest", year: 1975, rating: 5.0 },
+  { title: "The Godfather", year: 1972, rating: 5.0 },
+  { title: "A Clockwork Orange", year: 1971, rating: 4.0 },
+];
+
 var COLS = [
   { key: "rank", label: "#", sortable: false },
   { key: "title", label: "Title", sortable: true },
@@ -547,16 +785,24 @@ var COLS = [
   { key: "director", label: "Director", sortable: true },
   { key: "added", label: "Added", sortable: true }
 ];
+var COLS_WATCHED = [
+  { key: "rank", label: "#", sortable: false },
+  { key: "title", label: "Title", sortable: true },
+  { key: "year", label: "Year", sortable: true },
+  { key: "rating", label: "Your Rating", sortable: true }
+];
 
 var state = {
   recent:  { sortKey: null, sortDir: 1, grouped: true },
   rated:   { sortKey: "imdb", sortDir: -1, grouped: false },
-  release: { sortKey: "release", sortDir: -1, grouped: false }
+  release: { sortKey: "release", sortDir: -1, grouped: false },
+  watched: { sortKey: "rating", sortDir: -1, grouped: false }
 };
 var defaults = {
   recent:  { sortKey: null, sortDir: 1, grouped: true },
   rated:   { sortKey: "imdb", sortDir: -1, grouped: false },
-  release: { sortKey: "release", sortDir: -1, grouped: false }
+  release: { sortKey: "release", sortDir: -1, grouped: false },
+  watched: { sortKey: "rating", sortDir: -1, grouped: false }
 };
 var currentView = "recent";
 var openRows = {};
@@ -591,6 +837,84 @@ function pass(m, f) {
   }
   return true;
 }
+function passWatched(w, f) {
+  if (f.dec && Math.floor(w.year / 10) * 10 !== parseInt(f.dec, 10)) return false;
+  if (f.q) {
+    var hay = (w.title + " " + w.year + " " + w.rating).toLowerCase();
+    if (hay.indexOf(f.q) === -1) return false;
+  }
+  return true;
+}
+function starsHTML(rating) {
+  var label = (rating % 1 === 0 ? rating.toFixed(0) : rating.toFixed(1)) + " out of 5 stars";
+  var h = '<span class="stars" role="img" aria-label="' + label + '">';
+  for (var i = 0; i < 5; i++) {
+    var fill = rating - i;
+    if (fill >= 1) h += '<span class="star full">★</span>';
+    else if (fill >= 0.5) h += '<span class="star half"><span class="base">★</span><span class="fill">★</span></span>';
+    else h += '<span class="star empty">★</span>';
+  }
+  h += '</span><span class="stars-num">' + (rating % 1 === 0 ? rating.toFixed(0) : rating.toFixed(1)) + ' / 5</span>';
+  return h;
+}
+function watchedRowHTML(w, rank) {
+  var h = '<tr class="watched-row">';
+  h += '<td class="c-rank"><span class="rank">' + rank + '</span></td>';
+  h += '<td class="c-wtitle title-cell"><b>' + esc(w.title) + '</b></td>';
+  h += '<td class="c-wyear" data-lbl="Year"><span class="mono">' + w.year + '</span></td>';
+  h += '<td class="c-wrating" data-lbl="Your rating">' + starsHTML(w.rating) + '</td>';
+  h += '</tr>';
+  return h;
+}
+function renderWatched() {
+  var view = "watched";
+  var st = state[view];
+  var f = filters();
+  var rows = WATCHED.slice().filter(function(w){ return passWatched(w, f); });
+  if (st.sortKey) {
+    rows.sort(function(a, b){
+      var c = cmp(a, b, st.sortKey, st.sortDir);
+      if (c !== 0) return c;
+      if (st.sortKey === "rating") return cmp(a, b, "year", -1) || a.title.localeCompare(b.title);
+      return a.title.localeCompare(b.title);
+    });
+  }
+  var thead = "<thead><tr>";
+  COLS_WATCHED.forEach(function(c) {
+    if (!c.sortable) { thead += "<th>" + c.label + "</th>"; return; }
+    var arrow = "";
+    var aria = "none";
+    if (st.sortKey === c.key) { arrow = st.sortDir === 1 ? "↑" : "↓"; aria = st.sortDir === 1 ? "ascending" : "descending"; }
+    thead += '<th class="sortable" data-view="' + view + '" data-key="' + c.key + '" tabindex="0" role="button" aria-sort="' + aria + '" title="Sort by ' + c.label + '">' + c.label + '<span class="arr">' + arrow + "</span></th>";
+  });
+  thead += "</tr></thead>";
+  var body = "";
+  if (!rows.length) {
+    body = '<tr><td colspan="4"><div class="empty">No watched films match that search. Clear the search or pick a different decade.</div></td></tr>';
+  } else {
+    rows.forEach(function(w, i) { body += watchedRowHTML(w, i + 1); });
+  }
+  document.getElementById("tbl-watched").innerHTML = thead + "<tbody>" + body + "</tbody>";
+  var resetBtn = document.querySelector('[data-reset="watched"]');
+  var isDefault = JSON.stringify(st) === JSON.stringify(defaults[view]);
+  resetBtn.classList.toggle("show", !isDefault);
+  bindWatchedTable();
+  updateCount();
+}
+function bindWatchedTable() {
+  var tbl = document.getElementById("tbl-watched");
+  tbl.querySelectorAll("th.sortable").forEach(function(th) {
+    function doSort() {
+      var key = th.getAttribute("data-key");
+      var st = state.watched;
+      if (st.sortKey === key) { st.sortDir = st.sortDir * -1; }
+      else { st.sortKey = key; st.sortDir = (key === "rating" || key === "year") ? -1 : 1; }
+      renderWatched();
+    }
+    th.addEventListener("click", doSort);
+    th.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); doSort(); } });
+  });
+}
 
 function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
 
@@ -624,6 +948,7 @@ function rowHTML(m, rank, view) {
 }
 
 function render(view) {
+  if (view === "watched") { renderWatched(); return; }
   var st = state[view];
   var f = filters();
   var rows = baseOrder(view).filter(function(m){ return pass(m, f); });
@@ -669,6 +994,11 @@ function render(view) {
 
 function updateCount() {
   var f = filters();
+  if (currentView === "watched") {
+    var nw = WATCHED.filter(function(w){ return passWatched(w, f); }).length;
+    document.getElementById("countNote").textContent = nw + " of " + WATCHED.length + " watched";
+    return;
+  }
   var n = MOVIES.filter(function(m){ return pass(m, f); }).length;
   document.getElementById("countNote").textContent = n + " of " + MOVIES.length + " movies";
 }
@@ -711,6 +1041,10 @@ function switchView(view) {
   currentView = view;
   document.querySelectorAll(".viewbtn").forEach(function(b){ b.setAttribute("aria-selected", String(b.getAttribute("data-view") === view)); });
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id === "view-" + view); });
+  var srcSel = document.getElementById("srcFilter");
+  if (srcSel) srcSel.style.display = (view === "watched") ? "none" : "";
+  var qInput = document.getElementById("q");
+  if (qInput) qInput.placeholder = (view === "watched") ? "Search watched title or year…" : "Search title, director, description…";
   render(view);
   var nav = document.querySelector(".navwrap");
   var y = nav.getBoundingClientRect().top + window.scrollY - 4;
@@ -744,7 +1078,7 @@ document.querySelectorAll("[data-reset]").forEach(function(b) {
 // In Recently Added, mark details open by default
 MOVIES.forEach(function(m){ openRows["recent-" + m.seq] = true; });
 
-render("recent"); render("rated"); render("release");
+render("recent"); render("rated"); render("release"); render("watched");
 </script>
 </body>
 </html>
