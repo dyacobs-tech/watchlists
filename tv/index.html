@@ -159,6 +159,9 @@
   .pill.returning{background:var(--gold-bg);color:var(--gold)}
   .pill.watched{background:var(--teal-bg);color:var(--teal)}
   .lb-tag{font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.05em;background:var(--teal-bg);color:var(--teal);padding:3px 7px;border-radius:999px;white-space:nowrap}
+  .notes-tag{font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.05em;background:var(--gold-bg);color:var(--gold);padding:3px 7px;border-radius:999px;white-space:nowrap}
+  .src-cell{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .watched-flag{display:block;font-size:12.5px;color:var(--teal);font-weight:700;margin-top:3px}
   .stars{color:var(--teal);font-size:14px;letter-spacing:2px;white-space:nowrap}
   .watched-notice{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:10px;padding:14px 16px;margin:0 0 14px;font-size:14px}
   .watched-notice strong{font-family:"Archivo",sans-serif}
@@ -203,14 +206,15 @@
 <header class="masthead">
   <div class="masthead-top">
     <h1>TV Shows<br>to <span>Watch</span></h1>
-    <p class="deck">Prestige dramas and limited series saved from Instagram reels and posts — premiere dates, season counts, where each one stands now, and IMDb ratings for all of them — every rating links straight to the show's IMDb page. A fourth view, <strong>Watched</strong>, cross-checks the list against your Letterboxd history. <strong>Tap a column heading in any view to re-sort it.</strong></p>
+    <p class="deck">Prestige dramas and limited series saved from Instagram reels and posts — premiere dates, season counts, where each one stands now, and IMDb ratings for all of them — every rating links straight to the show's IMDb page. A fourth view, <strong>Watched</strong>, collects everything you've already seen — from your Letterboxd history and the watched list in your notes. <strong>Tap a column heading in any view to re-sort it.</strong></p>
   </div>
   <div class="stats" aria-label="List summary">
     <div class="stat"><b>13</b><span>Shows on the list</span></div>
     <div class="stat"><b><em>8.7</em></b><span>Top IMDb — Mr Inbetween</span></div>
     <div class="stat"><b>2016–2027</b><span>Premiere span</span></div>
     <div class="stat"><b>2 airing</b><span>War · The Rainmaker</span></div>
-    <div class="stat"><b><em>0 of 13</em></b><span>Watchlist shows watched · Letterboxd</span></div>
+    <div class="stat"><b><em>1 of 13</em></b><span>Watchlist shows watched · Tokyo Vice</span></div>
+    <div class="stat"><b>37</b><span>Watched TV titles in all</span></div>
     <div class="stat"><b>Nov 8, 2026</b><span>Last updated</span></div>
   </div>
 </header>
@@ -232,7 +236,7 @@
       </button>
       <button class="viewbtn" role="tab" data-view="watched" aria-selected="false" id="tab-watched">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/><path d="M9.5 15.5l2 2 3.5-4"/></svg></span>
-        <span class="lbl"><b>Watched</b><span>ON LETTERBOXD · 2 TV TITLES</span></span>
+        <span class="lbl"><b>Watched</b><span>LETTERBOXD + YOUR NOTES · 37 TITLES</span></span>
       </button>
     </nav>
   </div>
@@ -293,14 +297,14 @@
   <section class="view" id="view-watched" role="tabpanel" aria-labelledby="tab-watched">
     <div class="view-head">
       <div>
-        <h2>Watched — Letterboxd</h2>
-        <p>TV titles in your Letterboxd watched history (profile dyacobs, pulled November 8, 2026), with the rating you gave each one. Click any row for details; tap a column heading to re-sort.</p>
+        <h2>Watched</h2>
+        <p>Every TV title you've marked as seen: 36 shows from the watched list in your notes (November 8, 2026), plus the TV titles in your Letterboxd history — 37 in all, ranked by IMDb rating. Season notes are yours, kept exactly as you wrote them. Click any row for details; tap a column heading to re-sort.</p>
       </div>
-      <button class="reset-btn" data-reset="watched">↺ Back to Letterboxd order</button>
+      <button class="reset-btn" data-reset="watched">↺ Back to IMDb order</button>
     </div>
     <div class="watched-notice" role="note">
-      <strong>None of the 13 shows on the watchlist are marked watched on Letterboxd yet.</strong>
-      <p>Your Letterboxd history — 196 titles in all — was cross-checked against this list on November 8, 2026, and none of the 13 watchlist shows appear in it. The two TV titles below are the only series that do appear in your Letterboxd history; everything else there is a film.</p>
+      <strong>1 of the 13 watchlist shows is now marked watched: Tokyo Vice.</strong>
+      <p>Your notes list Tokyo Vice seasons 1 and 2 — the show's full run — so it's flagged as watched here and on the watchlist itself. None of the 13 appear in your Letterboxd history (196 titles, cross-checked November 8, 2026); the other watchlist-to-watched overlap is The Queen's Gambit, which sits in both your notes and your Letterboxd, where you rated it 5 out of 5.</p>
     </div>
     <div class="table-card"><table id="tbl-watched"></table></div>
   </section>
@@ -309,7 +313,7 @@
 <footer>
   <span>Source: “TV Shows to Watch” list · Split out of Movies to Watch on November 8, 2026</span>
   <span>IMDb ratings as of November 2026</span>
-  <span>Watched: Letterboxd profile dyacobs, pulled November 8, 2026</span>
+  <span>Watched: your notes, November 8, 2026 · Letterboxd profile dyacobs, pulled November 8, 2026</span>
 </footer>
 
 <script>
@@ -346,6 +350,7 @@ var SHOWS = [
   },
   {
     title: "Tokyo Vice", imdbUrl: "https://www.imdb.com/title/tt2887954", seq: 27, imdb: 8.1, premiere: "2022-04-07", premiereLabel: "Apr 7, 2022",
+    watchedFlag: "Watched — seasons 1–2, the full run (your notes, Nov 8, 2026)",
     seasons: 2, seasonsLabel: "2 seasons", seasonsSub: "18 episodes",
     status: "ended", statusLabel: "Ended 2024", network: "HBO Max",
     added: "2026-10-08", addedLabel: "October 8, 2026",
@@ -447,20 +452,87 @@ var SHOWS = [
 ];
 
 var WATCHED = [
-  {
-    title: "Squid Game", year: 2021, lb: 5, statusLabel: "Watched",
-    note: "The Korean survival drama — logged as watched on your Letterboxd and given a perfect score: 5 out of 5."
-  },
-  {
-    title: "The Queen's Gambit", year: 2020, lb: 5, statusLabel: "Watched",
-    note: "The chess drama — logged as watched on your Letterboxd and given a perfect score: 5 out of 5."
-  }
+  { title: "Breaking Bad", year: 2008, imdb: 9.5, imdbUrl: "https://www.imdb.com/title/tt0903747", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "A chemistry teacher turned meth manufacturer builds an empire in Albuquerque — five seasons, 2008–2013." },
+  { title: "Chernobyl", year: 2019, imdb: 9.3, imdbUrl: "https://www.imdb.com/title/tt7366338", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "HBO's five-part dramatization of the 1986 nuclear disaster and the cover-up that followed." },
+  { title: "Game of Thrones", year: 2011, imdb: 9.2, imdbUrl: "https://www.imdb.com/title/tt0944947", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "HBO's fantasy epic of the fight for the Iron Throne — eight seasons, 2011–2019." },
+  { title: "The Sopranos", year: 1999, imdb: 9.2, imdbUrl: "https://www.imdb.com/title/tt0141842", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Tony Soprano, New Jersey mob boss in therapy — six seasons, 1999–2007." },
+  { title: "Succession", year: 2018, imdb: 8.8, imdbUrl: "https://www.imdb.com/title/tt7660850", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "The Roy family fighting over a global media empire — four seasons on HBO, 2018–2023." },
+  { title: "Six Feet Under", year: 2001, imdb: 8.7, imdbUrl: "https://www.imdb.com/title/tt0248654", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "The Fisher family and their Los Angeles funeral home — five seasons, 2001–2005." },
+  { title: "The Crown", year: 2016, imdb: 8.6, imdbUrl: "https://www.imdb.com/title/tt4786824", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "The reign of Queen Elizabeth II, dramatized across six seasons on Netflix, 2016–2023." },
+  { title: "Dopesick", year: 2021, imdb: 8.6, imdbUrl: "https://www.imdb.com/title/tt9174558", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Hulu's limited series on the opioid crisis and Purdue Pharma, with Michael Keaton." },
+  { title: "My Brilliant Friend", year: 2018, imdb: 8.6, imdbUrl: "https://www.imdb.com/title/tt7278862", lb: null, source: "notes", seasonNote: "Seasons 1–3", statusLabel: "Watched",
+    note: "Elena and Lila growing up in postwar Naples, adapted from Elena Ferrante's Neapolitan novels. Your note specifies seasons 1–3." },
+  { title: "The Offer", year: 2022, imdb: 8.6, imdbUrl: "https://www.imdb.com/title/tt13111040", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "The making of The Godfather, told through producer Albert S. Ruddy — Paramount+ limited series." },
+  { title: "Shōgun", year: 2024, imdb: 8.6, imdbUrl: "https://www.imdb.com/title/tt2788316", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "FX's feudal-Japan epic, with Hiroyuki Sanada as Lord Toranaga and Cosmo Jarvis as the shipwrecked English pilot." },
+  { title: "Shtisel", year: 2013, imdb: 8.6, imdbUrl: "https://www.imdb.com/title/tt6195756", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "A Haredi family in Jerusalem navigating love, loss and tradition — Israeli drama, three seasons." },
+  { title: "The Last of Us", year: 2023, imdb: 8.5, imdbUrl: "https://www.imdb.com/title/tt3581920", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Pedro Pascal and Bella Ramsey crossing a post-pandemic America — HBO's adaptation of the game." },
+  { title: "The Queen's Gambit", year: 2020, imdb: 8.5, imdbUrl: "https://www.imdb.com/title/tt10048342", lb: 5, source: "both", seasonNote: null, statusLabel: "Watched",
+    note: "The chess drama with Anya Taylor-Joy. This one is in both of your records: it's on the watched list in your notes (November 8, 2026), and it's logged on your Letterboxd, where you gave it a perfect score — 5 out of 5." },
+  { title: "The Knick", year: 2014, imdb: 8.5, imdbUrl: "https://www.imdb.com/title/tt2937900", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Clive Owen as a brilliant, addicted surgeon at a New York hospital in 1900 — two seasons on Cinemax, directed by Steven Soderbergh." },
+  { title: "Ozark", year: 2017, imdb: 8.5, imdbUrl: "https://www.imdb.com/title/tt5071412", lb: null, source: "notes", seasonNote: "Season 4", statusLabel: "Watched",
+    note: "Jason Bateman laundering cartel money in the Missouri Ozarks. Your note specifies season 4." },
+  { title: "The Bear", year: 2022, imdb: 8.5, imdbUrl: "https://www.imdb.com/title/tt14452776", lb: null, source: "notes", seasonNote: "Seasons 2 / 3", statusLabel: "Watched",
+    note: "Jeremy Allen White turning a Chicago sandwich shop into a fine-dining kitchen. Your note specifies seasons 2 and 3." },
+  { title: "House of the Dragon", year: 2022, imdb: 8.4, imdbUrl: "https://www.imdb.com/title/tt11198330", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "The Targaryen civil war, set two centuries before Game of Thrones." },
+  { title: "Billions", year: 2016, imdb: 8.3, imdbUrl: "https://www.imdb.com/title/tt4270492", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Damian Lewis's hedge-fund king Bobby Axelrod against Paul Giamatti's U.S. Attorney — Showtime, seven seasons." },
+  { title: "Winning Time", year: 2022, imdb: 8.3, imdbUrl: "https://www.imdb.com/title/tt11173006", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "The rise of the 1980s Showtime Lakers — HBO's basketball dynasty drama." },
+  { title: "The Dynasty: New England Patriots", year: 2024, imdb: 8.3, imdbUrl: "https://www.imdb.com/title/tt18258144", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Apple TV+'s 10-part docuseries on the Patriots' 20-year run — your note flagged it as the Tom Brady one. Tom Brady, Bill Belichick and Robert Kraft tell the story of six Super Bowl wins and the dynasty's end." },
+  { title: "Hacks", year: 2021, imdb: 8.2, imdbUrl: "https://www.imdb.com/title/tt11815682", lb: null, source: "notes", seasonNote: "Season 3", statusLabel: "Watched",
+    note: "Jean Smart as veteran Las Vegas comic Deborah Vance, sparring with the young writer hired to save her act. Your note specifies season 3." },
+  { title: "Lessons in Chemistry", year: 2023, imdb: 8.2, imdbUrl: "https://www.imdb.com/title/tt13911628", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Brie Larson as a 1960s chemist who becomes the host of a TV cooking show — Apple TV+ limited series." },
+  { title: "Shrinking", year: 2023, imdb: 8.2, imdbUrl: "https://www.imdb.com/title/tt15677150", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Jason Segel as a grieving therapist who starts telling his patients the unfiltered truth; Harrison Ford as his mentor." },
+  { title: "Euphoria", year: 2019, imdb: 8.2, imdbUrl: "https://www.imdb.com/title/tt8772296", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Zendaya leading HBO's high-school drama about addiction, identity and first love." },
+  { title: "Ripley", year: 2024, imdb: 8.1, imdbUrl: "https://www.imdb.com/title/tt11016042", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Andrew Scott as Tom Ripley in 1960s Italy — Netflix limited series shot in black and white." },
+  { title: "Tokyo Vice", year: 2022, imdb: 8.1, imdbUrl: "https://www.imdb.com/title/tt2887954", lb: null, source: "notes", seasonNote: "Seasons 1 / 2", statusLabel: "Watched",
+    note: "An American journalist pulled into Tokyo's criminal underworld. Your note specifies seasons 1 and 2 — the show's full run. Tokyo Vice is also on your watchlist, where it's now flagged as watched." },
+  { title: "ZeroZeroZero", year: 2020, imdb: 8.1, imdbUrl: "https://www.imdb.com/title/tt8332438", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "A five-ton cocaine shipment tracked from Mexico to Italy, based on Roberto Saviano's book — one season, eight episodes." },
+  { title: "The White Lotus", year: 2021, imdb: 8.0, imdbUrl: "https://www.imdb.com/title/tt13406094", lb: null, source: "notes", seasonNote: "Seasons 1 / 2 / 3", statusLabel: "Watched",
+    note: "Mike White's resort anthology — Hawaii, then Sicily, then Thailand. Your note specifies seasons 1, 2 and 3 (the show appeared twice in the note; it's counted once here)." },
+  { title: "Unorthodox", year: 2020, imdb: 8.0, imdbUrl: "https://www.imdb.com/title/tt9815454", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "A young woman leaves her Hasidic community in Brooklyn and starts over in Berlin — Netflix limited series." },
+  { title: "Squid Game", year: 2021, imdb: 8.0, imdbUrl: "https://www.imdb.com/title/tt10919420", lb: 5, source: "letterboxd", seasonNote: null, statusLabel: "Watched",
+    note: "The Korean survival drama — logged as watched on your Letterboxd and given a perfect score: 5 out of 5." },
+  { title: "Nobody Wants This", year: 2024, imdb: 7.8, imdbUrl: "https://www.imdb.com/title/tt26933824", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Kristen Bell, an agnostic sex-and-dating podcaster, falls for Adam Brody's rabbi — Netflix romantic comedy." },
+  { title: "Baby Reindeer", year: 2024, imdb: 7.7, imdbUrl: "https://www.imdb.com/title/tt13649112", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Richard Gadd's autobiographical limited series about a struggling comedian and the woman who stalks him." },
+  { title: "Fleishman Is in Trouble", year: 2022, imdb: 7.7, imdbUrl: "https://www.imdb.com/title/tt11527158", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Jesse Eisenberg as a newly divorced doctor whose ex-wife vanishes — FX on Hulu limited series with Claire Danes and Lizzy Caplan." },
+  { title: "Physical", year: 2021, imdb: 7.3, imdbUrl: "https://www.imdb.com/title/tt11828492", lb: null, source: "notes", seasonNote: "Season 2", statusLabel: "Watched",
+    note: "Rose Byrne as a 1980s San Diego housewife who builds an aerobics empire. Your note specifies season 2." },
+  { title: "Welcome to Chippendales", year: 2022, imdb: 7.3, imdbUrl: "https://www.imdb.com/title/tt14913216", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Kumail Nanjiani as Steve Banerjee, the immigrant founder of the Chippendales strip empire — Hulu limited series. Listed in your note as “Chippendales.”" },
+  { title: "The Patient", year: 2022, imdb: 7.0, imdbUrl: "https://www.imdb.com/title/tt13102606", lb: null, source: "notes", seasonNote: null, statusLabel: "Watched",
+    note: "Steve Carell as a therapist held captive by his own patient, a serial killer played by Domhnall Gleeson — FX on Hulu limited series." }
 ];
 
 var WCOLS = [
   { key: "rank", label: "#", sortable: false },
   { key: "title", label: "Title", sortable: true },
-  { key: "lb", label: "Your Letterboxd Rating", sortable: true },
+  { key: "imdb", label: "IMDb", sortable: true },
+  { key: "source", label: "Source", sortable: true },
   { key: "year", label: "Year", sortable: true },
   { key: "statusLabel", label: "Status", sortable: true }
 ];
@@ -479,13 +551,13 @@ var state = {
   recent:   { sortKey: null, sortDir: 1, grouped: true },
   rated:    { sortKey: "imdb", sortDir: -1, grouped: false },
   premiere: { sortKey: "premiere", sortDir: -1, grouped: false },
-  watched:  { sortKey: "lb", sortDir: -1, grouped: false }
+  watched:  { sortKey: "imdb", sortDir: -1, grouped: false }
 };
 var defaults = {
   recent:   { sortKey: null, sortDir: 1, grouped: true },
   rated:    { sortKey: "imdb", sortDir: -1, grouped: false },
   premiere: { sortKey: "premiere", sortDir: -1, grouped: false },
-  watched:  { sortKey: "lb", sortDir: -1, grouped: false }
+  watched:  { sortKey: "imdb", sortDir: -1, grouped: false }
 };
 var currentView = "recent";
 var openRows = {};
@@ -549,7 +621,7 @@ function rowHTML(s, rank, view) {
   var detailOpen = openRows[id] || view === "recent";
   var h = '<tr class="show-row' + open + '" data-id="' + id + '" tabindex="0" role="button" aria-expanded="' + (detailOpen ? "true" : "false") + '" title="Click for notes">';
   h += '<td class="c-rank"><span class="rank">' + rank + '</span></td>';
-  h += '<td class="c-title title-cell"><b>' + esc(s.title) + ' <span class="chev">▾</span></b><span class="sub">' + esc(s.seasonsLabel) + ' · ' + esc(s.seasonsSub) + '</span></td>';
+  h += '<td class="c-title title-cell"><b>' + esc(s.title) + ' <span class="chev">▾</span></b><span class="sub">' + esc(s.seasonsLabel) + ' · ' + esc(s.seasonsSub) + '</span>' + (s.watchedFlag ? '<span class="watched-flag">✓ ' + esc(s.watchedFlag) + '</span>' : '') + '</td>';
   h += '<td class="c-rating">' + ratingHTML(s) + '</td>';
   h += '<td class="c-premiere" data-lbl="Premiered"><span class="mono">' + esc(s.premiereLabel) + '</span></td>';
   h += '<td class="c-seasons"><span class="seasons">' + esc(s.seasonsLabel) + '<span>' + esc(s.seasonsSub) + '</span></span></td>';
@@ -573,20 +645,37 @@ function lbRatingHTML(s) {
   var pct = Math.round((s.lb / 5) * 100);
   return '<span class="rating"><b>' + s.lb + ' / 5</b><span class="bar"><i style="width:' + pct + '%;background:var(--teal)"></i></span></span> <span class="stars" aria-hidden="true">' + starsHTML(s.lb) + '</span> <span class="lb-tag">Letterboxd</span>';
 }
+function sourceHTML(s) {
+  var h = '<span class="src-cell">';
+  if (s.source === "notes" || s.source === "both") h += '<span class="notes-tag">Your notes</span>';
+  if (s.lb) h += '<span class="lb-tag">Letterboxd ★ ' + s.lb + '/5</span>';
+  h += '</span>';
+  return h;
+}
+function sourceLine(s) {
+  if (s.source === "both") return 'SOURCE: YOUR NOTES · NOVEMBER 8, 2026 · AND LETTERBOXD · PROFILE DYACOBS · PULLED NOVEMBER 8, 2026 · YOUR LETTERBOXD RATING ' + s.lb + ' / 5';
+  if (s.source === "letterboxd") return 'SOURCE: LETTERBOXD · PROFILE DYACOBS · PULLED NOVEMBER 8, 2026 · YOUR RATING ' + s.lb + ' / 5';
+  return 'SOURCE: YOUR NOTES · NOVEMBER 8, 2026';
+}
 function watchedRowHTML(s, rank) {
   var id = "watched-" + s.title.replace(/\W+/g, "");
   var open = openRows[id] ? " open" : "";
   var detailOpen = !!openRows[id];
+  var sub = 'TV · ' + s.year;
+  if (s.seasonNote) sub += ' · Your note: ' + s.seasonNote.toLowerCase();
+  if (s.lb) sub += ' · rated ' + s.lb + ' of 5 on Letterboxd';
   var h = '<tr class="show-row' + open + '" data-id="' + id + '" tabindex="0" role="button" aria-expanded="' + (detailOpen ? "true" : "false") + '" title="Click for details">';
   h += '<td class="c-rank"><span class="rank">' + rank + '</span></td>';
-  h += '<td class="c-title title-cell"><b>' + esc(s.title) + ' <span class="chev">▾</span></b><span class="sub">TV · ' + s.year + ' · rated ' + s.lb + ' of 5 on Letterboxd</span></td>';
-  h += '<td class="c-lb">' + lbRatingHTML(s) + '</td>';
+  h += '<td class="c-title title-cell"><b>' + esc(s.title) + ' <span class="chev">▾</span></b><span class="sub">' + esc(sub) + '</span></td>';
+  h += '<td class="c-rating">' + ratingHTML(s) + '</td>';
+  h += '<td class="c-lb">' + sourceHTML(s) + '</td>';
   h += '<td class="c-year" data-lbl="Year"><span class="mono">' + s.year + '</span></td>';
   h += '<td class="c-status"><span class="pill watched">' + esc(s.statusLabel) + '</span></td>';
   h += '</tr>';
-  h += '<tr class="detail-row" data-for="' + id + '" style="display:' + (detailOpen ? "table-row" : "none") + '"><td colspan="5">';
+  h += '<tr class="detail-row" data-for="' + id + '" style="display:' + (detailOpen ? "table-row" : "none") + '"><td colspan="6">';
   h += '<p>' + esc(s.note) + '</p>';
-  h += '<p class="src">SOURCE: LETTERBOXD · PROFILE DYACOBS · PULLED NOVEMBER 8, 2026 · YOUR RATING ' + s.lb + ' / 5</p>';
+  if (s.seasonNote) h += '<p class="run"><strong>Your season note:</strong> ' + esc(s.seasonNote) + '</p>';
+  h += '<p class="src">' + sourceLine(s) + ' · <a href="' + s.imdbUrl + '" target="_blank" rel="noopener">IMDb page ↗</a></p>';
   h += '</td></tr>';
   return h;
 }
@@ -595,9 +684,9 @@ function renderWatched() {
   var st = state.watched;
   var q = document.getElementById("q").value.trim().toLowerCase();
   var rows = WATCHED.slice();
-  // Default order: your rating, highest first; newest year breaks ties
-  rows.sort(function(a, b){ return (b.lb - a.lb) || (b.year - a.year) || a.title.localeCompare(b.title); });
-  if (q) rows = rows.filter(function(s){ return (s.title + " " + s.year + " watched letterboxd").toLowerCase().indexOf(q) !== -1; });
+  // Default order: IMDb rating, highest first; title breaks ties
+  rows.sort(function(a, b){ return (b.imdb - a.imdb) || a.title.localeCompare(b.title); });
+  if (q) rows = rows.filter(function(s){ return (s.title + " " + s.year + " " + (s.seasonNote || "") + " " + s.source + " watched letterboxd notes").toLowerCase().indexOf(q) !== -1; });
   if (st.sortKey) rows.sort(function(a, b){ return cmp(a, b, st.sortKey, st.sortDir); });
 
   var thead = "<thead><tr>";
@@ -612,7 +701,7 @@ function renderWatched() {
 
   var body = "";
   if (!rows.length) {
-    body = '<tr><td colspan="5"><div class="empty">No watched TV titles match that search.</div></td></tr>';
+    body = '<tr><td colspan="6"><div class="empty">No watched TV titles match that search.</div></td></tr>';
   } else {
     rows.forEach(function(s, i) { body += watchedRowHTML(s, i + 1); });
   }
@@ -633,7 +722,7 @@ function bindWatched() {
       var key = th.getAttribute("data-key");
       var st = state.watched;
       if (st.sortKey === key) { st.sortDir = st.sortDir * -1; }
-      else { st.sortKey = key; st.sortDir = (key === "lb" || key === "year") ? -1 : 1; }
+      else { st.sortKey = key; st.sortDir = (key === "imdb" || key === "year") ? -1 : 1; }
       renderWatched();
     }
     th.addEventListener("click", doSort);
