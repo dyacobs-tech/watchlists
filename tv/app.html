@@ -189,12 +189,36 @@
     tbody td{padding:0;border-bottom:none}
     td.c-rank{display:none}
     td.c-title{margin-bottom:8px}
-    td.c-rating, td.c-premiere, td.c-seasons, td.c-status, td.c-network, td.c-lb, td.c-year{display:inline-block;width:auto;margin:0 14px 4px 0;vertical-align:middle}
-    td.c-premiere::before, td.c-network::before, td.c-year::before{content:attr(data-lbl);font-family:"IBM Plex Mono",monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);display:block}
+    td.c-rating, td.c-premiere, td.c-seasons, td.c-status, td.c-network, td.c-lb, td.c-year, td.c-lastseen{display:inline-block;width:auto;margin:0 14px 4px 0;vertical-align:middle}
+    td.c-premiere::before, td.c-network::before, td.c-year::before, td.c-lastseen::before{content:attr(data-lbl);font-family:"IBM Plex Mono",monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);display:block}
     .detail-row td{padding:4px 14px 16px}
     tr.group-row td{padding:10px 14px}
     tr.group-row .gsrc{display:block;margin:2px 0 0}
   }
+
+  /* ---------- Add a show + Last seen ---------- */
+  .add-btn{background:var(--accent);color:var(--accent-ink);border:1.5px solid var(--accent);border-radius:999px;padding:9px 16px;font-size:13.5px;font-weight:700;white-space:nowrap}
+  .add-btn:active{transform:scale(.98)}
+  .add-panel{max-width:1180px;margin:0 auto;padding:12px 20px 0}
+  @media (max-width:640px){.add-panel{padding:10px 12px 0}}
+  .add-card{background:var(--surface);border:1.5px solid var(--line-strong);border-radius:14px;padding:18px}
+  .add-card h3{font-family:"Archivo",sans-serif;font-size:18px;font-weight:800;margin:0 0 12px;letter-spacing:-.01em}
+  .add-card label{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);margin:0 0 12px}
+  .add-card input{display:block;width:100%;margin-top:5px;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--ink);font:inherit;font-size:14.5px;text-transform:none;letter-spacing:normal}
+  .add-card input:focus{outline:2px solid var(--accent);outline-offset:0}
+  .add-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+  .add-save{background:var(--ink);color:var(--bg);border:1.5px solid var(--ink);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:700}
+  .add-cancel{background:none;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:13.5px;font-weight:600}
+  .add-note{margin:12px 0 0;color:var(--ink-2);font-size:12.5px}
+  .add-err{margin:10px 0 0;color:var(--accent);font-size:13px;font-weight:600;display:none}
+  .lastseen{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;white-space:nowrap}
+  .lastseen .ls-none{color:var(--ink-3);font-weight:400}
+  .ls-edit{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  .ls-edit label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+  .ls-edit input{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);font:inherit;font-size:14px;width:130px}
+  .ls-edit input:focus{outline:2px solid var(--accent)}
+  .ls-save{background:var(--ink);color:var(--bg);border:1.5px solid var(--ink);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700}
+  .ls-hint{font-size:12px;color:var(--ink-3)}
 
   .empty{padding:36px 20px;text-align:center;color:var(--ink-2);font-size:14px}
   footer{max-width:1180px;margin:0 auto;padding:0 20px 36px;color:var(--ink-3);font-size:12.5px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
@@ -209,13 +233,13 @@
     <p class="deck">Prestige dramas and limited series saved from Instagram reels and posts — premiere dates, season counts, where each one stands now, and IMDb ratings for all of them — every rating links straight to the show's IMDb page. A fourth view, <strong>Watched</strong>, collects everything you've already seen — from your Letterboxd history and the watched list in your notes. <strong>Tap a column heading in any view to re-sort it.</strong></p>
   </div>
   <div class="stats" aria-label="List summary">
-    <div class="stat"><b>13</b><span>Shows on the list</span></div>
+    <div class="stat"><b id="statCount">13</b><span>Shows on the list</span></div>
     <div class="stat"><b><em>8.7</em></b><span>Top IMDb — Mr Inbetween</span></div>
     <div class="stat"><b>2016–2027</b><span>Premiere span</span></div>
     <div class="stat"><b>2 airing</b><span>War · The Rainmaker</span></div>
     <div class="stat"><b><em>1 of 13</em></b><span>Watchlist shows watched · Tokyo Vice</span></div>
     <div class="stat"><b>37</b><span>Watched TV titles in all</span></div>
-    <div class="stat"><b>Nov 8, 2026</b><span>Last updated</span></div>
+    <div class="stat"><b>Nov 20, 2026</b><span>Last updated</span></div>
   </div>
 </header>
 
@@ -257,7 +281,29 @@
     <option value="returning">More coming</option>
     <option value="ended">Finished</option>
   </select>
+  <button id="addShowBtn" class="add-btn" aria-expanded="false" aria-controls="addPanel">＋ Add a show</button>
   <span class="count-note" id="countNote"></span>
+</div>
+
+<div class="add-panel" id="addPanel" hidden>
+  <div class="add-card">
+    <h3>Add a show to the list</h3>
+    <label>Title
+      <input type="text" id="addTitle" placeholder="Show title" autocomplete="off">
+    </label>
+    <label>Network / where to watch
+      <input type="text" id="addNetwork" placeholder="e.g. Netflix, HBO, Apple TV+" autocomplete="off">
+    </label>
+    <label>Note — why it's on the list (optional)
+      <input type="text" id="addNote" placeholder="Optional" autocomplete="off">
+    </label>
+    <div class="add-actions">
+      <button id="addSave" class="add-save">Add to list</button>
+      <button id="addCancel" class="add-cancel">Cancel</button>
+    </div>
+    <p class="add-err" id="addErr"></p>
+    <p class="add-note">The show goes straight onto the list, saved on this device. Ratings, premiere dates and season details get filled in when the page is next updated.</p>
+  </div>
 </div>
 
 <main>
@@ -528,6 +574,22 @@ var WATCHED = [
     note: "Steve Carell as a therapist held captive by his own patient, a serial killer played by Domhnall Gleeson — FX on Hulu limited series." }
 ];
 
+// ---- Your additions, stored on this device (localStorage) ----
+var LS_SHOWS = "tvwatch.userShows.v1";
+var LS_SEEN = "tvwatch.lastSeen.v1";
+function lsGet(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+var userShows = lsGet(LS_SHOWS, []);
+if (!Array.isArray(userShows)) userShows = [];
+userShows.forEach(function(s) { SHOWS.push(s); });
+var lastSeenMap = lsGet(LS_SEEN, {});
+if (!lastSeenMap || typeof lastSeenMap !== "object") lastSeenMap = {};
+function lastSeenOf(s) { return lastSeenMap[s.title] || ""; }
+(function() {
+  var el = document.getElementById("statCount");
+  if (el) el.textContent = SHOWS.length;
+})();
+
 var WCOLS = [
   { key: "rank", label: "#", sortable: false },
   { key: "title", label: "Title", sortable: true },
@@ -544,7 +606,8 @@ var COLS = [
   { key: "premiere", label: "Premiered", sortable: true },
   { key: "seasons", label: "Seasons", sortable: true },
   { key: "statusLabel", label: "Status", sortable: true },
-  { key: "network", label: "Network", sortable: true }
+  { key: "network", label: "Network", sortable: true },
+  { key: "lastSeen", label: "Last seen", sortable: false }
 ];
 
 var state = {
@@ -602,6 +665,9 @@ function esc(t){ return t.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
 
 function ratingHTML(s) {
   var inner;
+  if (s.imdb === null && !s.imdbUrl) {
+    return '<span class="rating na"><b>—</b></span>';
+  }
   if (s.imdb === null) {
     inner = '<span class="rating na"><b>NOT YET RATED</b></span>';
   } else {
@@ -611,7 +677,7 @@ function ratingHTML(s) {
   return '<a class="imdb-link" href="' + s.imdbUrl + '" target="_blank" rel="noopener" title="' + esc(s.title) + ' on IMDb" aria-label="' + esc(s.title) + ' on IMDb">' + inner + '<span class="imdb-tag">IMDb ↗</span></a>';
 }
 function pillHTML(s) {
-  var cls = s.status === "airing" ? "airing" : s.status === "upcoming" ? "upcoming" : s.status === "returning" ? "returning" : "ended";
+  var cls = s.status === "airing" ? "airing" : s.status === "upcoming" ? "upcoming" : s.status === "returning" || s.status === "added" ? "returning" : "ended";
   return '<span class="pill ' + cls + '">' + esc(s.statusLabel) + '</span>';
 }
 
@@ -621,17 +687,20 @@ function rowHTML(s, rank, view) {
   var detailOpen = openRows[id] || view === "recent";
   var h = '<tr class="show-row' + open + '" data-id="' + id + '" tabindex="0" role="button" aria-expanded="' + (detailOpen ? "true" : "false") + '" title="Click for notes">';
   h += '<td class="c-rank"><span class="rank">' + rank + '</span></td>';
-  h += '<td class="c-title title-cell"><b>' + esc(s.title) + ' <span class="chev">▾</span></b><span class="sub">' + esc(s.seasonsLabel) + ' · ' + esc(s.seasonsSub) + '</span>' + (s.watchedFlag ? '<span class="watched-flag">✓ ' + esc(s.watchedFlag) + '</span>' : '') + '</td>';
+  h += '<td class="c-title title-cell"><b>' + esc(s.title) + ' <span class="chev">▾</span></b><span class="sub">' + esc(s.seasonsLabel) + (s.seasonsSub ? ' · ' + esc(s.seasonsSub) : '') + '</span>' + (s.watchedFlag ? '<span class="watched-flag">✓ ' + esc(s.watchedFlag) + '</span>' : '') + '</td>';
   h += '<td class="c-rating">' + ratingHTML(s) + '</td>';
   h += '<td class="c-premiere" data-lbl="Premiered"><span class="mono">' + esc(s.premiereLabel) + '</span></td>';
   h += '<td class="c-seasons"><span class="seasons">' + esc(s.seasonsLabel) + '<span>' + esc(s.seasonsSub) + '</span></span></td>';
   h += '<td class="c-status">' + pillHTML(s) + '</td>';
   h += '<td class="c-network" data-lbl="Network"><span class="network">' + esc(s.network) + '</span></td>';
+  var lsVal = lastSeenOf(s);
+  h += '<td class="c-lastseen" data-lbl="Last seen"><span class="lastseen">' + (lsVal ? esc(lsVal) : '<span class="ls-none">—</span>') + '</span></td>';
   h += '</tr>';
-  h += '<tr class="detail-row" data-for="' + id + '" style="display:' + (detailOpen ? "table-row" : "none") + '"><td colspan="7">';
+  h += '<tr class="detail-row" data-for="' + id + '" data-sidx="' + SHOWS.indexOf(s) + '" style="display:' + (detailOpen ? "table-row" : "none") + '"><td colspan="8">';
   h += '<p>' + esc(s.desc) + '</p>';
-  h += '<p class="run"><strong>Run:</strong> ' + esc(s.run) + '</p>';
-  h += '<p class="src">ADDED ' + esc(s.addedLabel.toUpperCase()) + ' · ' + esc(s.source) + (s.sourceUrl ? ' · <a href="' + s.sourceUrl + '" target="_blank" rel="noopener">source post ↗</a>' : '') + ' · <a href="' + s.imdbUrl + '" target="_blank" rel="noopener">IMDb page ↗</a></p>';
+  if (s.run) h += '<p class="run"><strong>Run:</strong> ' + esc(s.run) + '</p>';
+  h += '<p class="src">ADDED ' + esc(s.addedLabel.toUpperCase()) + ' · ' + esc(s.source) + (s.sourceUrl ? ' · <a href="' + s.sourceUrl + '" target="_blank" rel="noopener">source post ↗</a>' : '') + (s.imdbUrl ? ' · <a href="' + s.imdbUrl + '" target="_blank" rel="noopener">IMDb page ↗</a>' : '') + '</p>';
+  h += '<div class="ls-edit"><label>Last seen <input type="text" class="ls-input" placeholder="e.g. S2 E4" autocomplete="off" value="' + esc(lsVal).replace(/"/g, "&quot;") + '"></label><button type="button" class="ls-save">Save</button><span class="ls-hint">The last episode you watched — so you know where to pick up. Saved on this device.</span></div>';
   h += '</td></tr>';
   return h;
 }
@@ -766,13 +835,13 @@ function render(view) {
 
   var body = "";
   if (!rows.length) {
-    body = '<tr><td colspan="7"><div class="empty">No shows match that filter. Clear the search or pick a different network / status.</div></td></tr>';
+    body = '<tr><td colspan="8"><div class="empty">No shows match that filter. Clear the search or pick a different network / status.</div></td></tr>';
   } else if (view === "recent" && st.grouped && !st.sortKey) {
     var lastGroup = null;
     rows.forEach(function(s, i) {
       var gkey = s.added + "|" + s.source;
       if (s.added !== lastGroup) {
-        body += '<tr class="group-row"><td colspan="7"><span class="gdate">Added ' + esc(s.addedLabel) + '</span></td></tr>';
+        body += '<tr class="group-row"><td colspan="8"><span class="gdate">Added ' + esc(s.addedLabel) + '</span></td></tr>';
         lastGroup = s.added;
       }
       body += rowHTML(s, i + 1, view);
@@ -840,6 +909,28 @@ function bindTable(view) {
   tbl.querySelectorAll("tr.detail-row").forEach(function(dr) {
     if (dr.style.display !== "none" && window.innerWidth <= 760) dr.style.display = "block";
   });
+  // Last seen editors
+  tbl.querySelectorAll("tr.detail-row .ls-save").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var dr = btn.closest("tr.detail-row");
+      var s = SHOWS[Number(dr.getAttribute("data-sidx"))];
+      if (!s) return;
+      var val = dr.querySelector(".ls-input").value.trim();
+      if (val) lastSeenMap[s.title] = val; else delete lastSeenMap[s.title];
+      lsSet(LS_SEEN, lastSeenMap);
+      render("recent"); render("rated"); render("premiere");
+    });
+  });
+  tbl.querySelectorAll("tr.detail-row .ls-input").forEach(function(inp) {
+    inp.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        var b = inp.closest("tr.detail-row").querySelector(".ls-save");
+        if (b) b.click();
+      }
+    });
+    inp.addEventListener("click", function(e) { e.stopPropagation(); });
+  });
 }
 
 function switchView(view) {
@@ -874,6 +965,66 @@ document.querySelectorAll("[data-reset]").forEach(function(b) {
   nets.sort();
   var sel = document.getElementById("netFilter");
   nets.forEach(function(n){ var o = document.createElement("option"); o.value = n; o.textContent = n; sel.appendChild(o); });
+})();
+
+// ---- Add a show ----
+(function() {
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var btn = document.getElementById("addShowBtn");
+  var panel = document.getElementById("addPanel");
+  var titleIn = document.getElementById("addTitle");
+  var netIn = document.getElementById("addNetwork");
+  var noteIn = document.getElementById("addNote");
+  var err = document.getElementById("addErr");
+  function showErr(msg) { err.textContent = msg; err.style.display = msg ? "block" : "none"; }
+  function openPanel() {
+    panel.hidden = false;
+    btn.setAttribute("aria-expanded", "true");
+    showErr("");
+    setTimeout(function() { titleIn.focus(); }, 30);
+  }
+  function closePanel() {
+    panel.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+  }
+  btn.addEventListener("click", function() { panel.hidden ? openPanel() : closePanel(); });
+  document.getElementById("addCancel").addEventListener("click", closePanel);
+  document.getElementById("addSave").addEventListener("click", function() {
+    var t = titleIn.value.trim();
+    if (!t) { showErr("Give the show a title first."); titleIn.focus(); return; }
+    var dupe = SHOWS.some(function(s) { return s.title.toLowerCase() === t.toLowerCase(); });
+    if (dupe) { showErr("“" + t + "” is already on the list."); return; }
+    var now = new Date();
+    var iso = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+    var net = netIn.value.trim();
+    var note = noteIn.value.trim();
+    var s = {
+      title: t, imdbUrl: "", seq: 900 + userShows.length, imdb: null,
+      premiere: "", premiereLabel: "—",
+      seasons: 0, seasonsLabel: "New to the list", seasonsSub: "",
+      status: "added", statusLabel: "Added by you",
+      network: net || "—",
+      added: iso, addedLabel: MONTHS[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear(),
+      source: "Added by you in the app", sourceUrl: null,
+      desc: note || "Added by you — no notes yet.",
+      run: "", userAdded: true
+    };
+    userShows.push(s);
+    SHOWS.push(s);
+    lsSet(LS_SHOWS, userShows);
+    if (net) {
+      var sel = document.getElementById("netFilter");
+      var exists = false;
+      for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === net) exists = true;
+      if (!exists) { var o = document.createElement("option"); o.value = net; o.textContent = net; sel.appendChild(o); }
+    }
+    var sc = document.getElementById("statCount");
+    if (sc) sc.textContent = SHOWS.length;
+    titleIn.value = ""; netIn.value = ""; noteIn.value = "";
+    closePanel();
+    render("recent"); render("rated"); render("premiere");
+    switchView("recent");
+  });
 })();
 
 // In Recently Added, mark details open by default
